@@ -112,7 +112,7 @@ bool checkTie(char board[3][3]){
     //checks if any positions on the board are empty, if so, return false
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
-            if(board[i][j] != 'X' || board[i][j] != 'O'){
+            if(board[i][j] != 'X' && board[i][j] != 'O'){
                 return false; 
             }
         }
