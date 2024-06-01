@@ -28,11 +28,23 @@ int main(){
         cout << currentPlayer << ", please choose a position on the board" << endl;
         cin >> pos;
 
-        markSpot(board, pos, currentPlayer);
+        while(pos < 1 || pos >9 || cin.fail()){
+            cout << "Invalid input. Try again." << endl;
+            cin.clear(); // removes error flag, allows input stream to be used again
+            cin.ignore(100000, '\n'); // Discards up to 100000 characters or until a newline character is encountered
+            cin >> pos;
+        }
+
+        while(markSpot(board, pos, currentPlayer) != true){
+            cout << "Spot already taken, try again!" << endl;
+            cin >> pos;
+        }
 
         if(checkForWinner(board) == true){
+            cout << currentPlayer << " Wins!!" << endl;
             gameOver = true;
         } else if (checkTie(board)) {
+            cout << "TIE!" << endl;
             gameOver = true;
         }
 
@@ -79,12 +91,16 @@ bool checkForWinner(char board[3][3]){
 
     for(int i = 0; i < 3; i++){
 
-        //check rows [i][0/1/2] and columns [0/1/2][i]
+        //check rows [0/1/2][i] and columns [i][0/1/2]
         if(board[i][0]==board[i][1] && board[i][1] == board[i][2]) {
             return true;
         } else if (board[0][i]==board[1][i]&&board[1][i]==board[2][i]) { 
             return true;
-        } 
+        } else if (board[0][0]==board[1][1] && board[1][1] == board[2][2]) {
+            return true;
+        } else if(board[0][2]==board[1][1] && board[1][1] == board[2][0]) {
+            return true;
+        }
 
     }
 
